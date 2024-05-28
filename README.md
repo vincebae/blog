@@ -1,6 +1,8 @@
 # Blog
 
-My [blog](https://blog.michielborkent.nl/).
+My blog (link to be added).
 
-See [this](https://blog.michielborkent.nl/migrating-octopress-to-babashka.html)
-blog post about rewriting this blog from Octopress to babashka.
+Forked from [borkdude/blog](https://github.com/borkdude/blog)
+
+
+
