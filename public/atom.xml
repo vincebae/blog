@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Contemplating Software Development</title>
+  <link href="https://blog.biniko.me/atom.xml" rel="self"/>
+  <link href="https://blog.biniko.me"/>
+  <updated>2024-05-28T05:13:29+00:00</updated>
+  <id>https://blog.biniko.me</id>
+  <author>
+    <name>Seung-Bin Bae</name>
+  </author>
+  <entry>
+    <id>https://blog.biniko.me/first-post.html</id>
+    <link href="https://blog.biniko.me/first-post.html"/>
+    <title>First blog post</title>
+    <updated>2024-05-27T23:59:59+00:00</updated>
+    <content type="html"><![CDATA[<p>The first post of my blog based on <a href='https://github.com/borkdude/blog'>borkdude/blog</a> and <a href='https://medium.com/@jmglov/actually-blogging-with-clojure-fe485990eb98'>this instruction</a></p>]]></content>
+  </entry>
+</feed>
