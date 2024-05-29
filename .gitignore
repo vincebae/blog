@@ -13,9 +13,10 @@ node_modules
 Gemfile.lock
 .cache
 .work
-.clj-kondo/rewrite-clj
+.clj-kondo/
 .cpcache
 .shadow-cljs
+.nrepl-port
 report.html
 classes
-target
+target/
