@@ -10,4 +10,6 @@
   :main ^:skip-aot web-server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
+                       :jar-name "web-server.jar"
+                       :uberjar-name "web-server-standalone.jar"
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
