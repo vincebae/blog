@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Contemplating Software Development</title>
+  <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-05-29T03:14:22+00:00</updated>
+  <updated>2024-05-29T06:49:14+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>

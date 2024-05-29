@@ -7,7 +7,7 @@
  {:init (def opts (merge (cli/parse-opts *command-line-args*)
                          {:blog-author "Seung-Bin Bae"
                           :blog-title "Contemplating Software"
-                          :blog-description "Rambles on software engineering, architecture and programming"
+                          :blog-description "Rambles on software development, architecture and programming"
                           :out-dir "public"
                           :blog-root "https://blog.biniko.me"
                           :discuss-link "https://github.com/vincebae/blog/discussions/categories/posts"
