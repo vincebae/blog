@@ -6,7 +6,7 @@
 
 (def ^:private CLI-OPTIONS
   [["-p" "--port PORT" "Port number"
-    :default 80
+    :default 8080
     :parse-fn #(Integer/parseInt %)]
    ["-d" "--dir DIR" "Directory to serve"
     :default "public"]])
