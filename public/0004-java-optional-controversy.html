@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Java Optional Controversy</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="application/atom+xml" rel="alternate" href="atom.xml" title="Java Optional Controversy">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-clojure.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css">
+
+    <!-- See Features > favicon in README.md -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!-- Social sharing (Facebook, Twitter, LinkedIn, etc.) -->
+    <meta name="title" content="Java Optional Controversy">
+    <meta name="twitter:title" content="Java Optional Controversy">
+    <meta property="og:title" content="Java Optional Controversy">
+    <meta property="og:type" content="website">
+
+
+    <meta name="twitter:url" content="https://blog.biniko.me/0004-java-optional-controversy.html">
+    <meta property="og:url" content="https://blog.biniko.me/0004-java-optional-controversy.html">
+
+
+    <meta name="twitter:card" content="summary">
+
+
+
+  </head>
+  <body>
+
+    <div class="site-header">
+      <div class="wrapper">
+        <div class="site-nav">
+          <a class="page-link" href="archive.html">Archive</a>
+          <a class="page-link" href="tags/index.html">Tags</a>
+          <a class="page-link" href="https://github.com/vincebae/blog/discussions/categories/posts">Discuss</a>
+	  <a class="page-link" href="atom.xml">
+            Feed
+          </a>
+	  
+	  
+	  <a class="page-link" href="https://www.linkedin.com/in/seung-bin-bae/">About</a>
+	  
+        </div>
+        <div>
+          <h1 class="site-title">
+            <a class="page-link" href="index.html">Contemplating Software</a>
+          </h1>
+	  <p>Rambles on software development, architecture and programming</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+
+      <h1>
+  
+  Java Optional Controversy
+  
+</h1>
+<p>I have worked at a company and on a team where <code>Optional</code> is used extensively for a long time. So, I was very surprised when I found out that <code>Optional</code> is a <a href='https://nipafx.dev/inside-java-newscast-19/'>controversial topic</a>. There is even a camp that believes <a href='https://blogs.oracle.com/javamagazine/post/optional-class-null-pointer-drawbacks'><code>Optional</code> should be avoided</a>. Brian Goetz, the Java Architect, explicitly advocates the <a href='https://stackoverflow.com/questions/26327957/should-java-8-getters-return-optional-type/26328555#26328555'>"Use Optional as a Return Value in Limited Cases" camp</a> on Stack Overflow. This Stack Overflow post was written in 2014, and comments are still active even in 2024.</p><p>All this controversy confused me a lot. My current team follows Brian Goetz's opinion, and it is not very easy to persuade them to use <code>Optional</code> more broadly whenever needed.</p><p>Then, I found this comment in Brian Goetz's post, and my mind became clear:<blockquote><p> Java did not invent Optional. Neither does Java's Optional type do anything special than its usage in other languages.  </p></blockquote>Yes, <code>Optional</code> (or <code>Option</code> or <code>Maybe</code>) probably predates Java. Java users used custom <code>Optional</code> types (e.g., Guava) even before <code>java.util.Optional</code> was added. The opinion of the <i>Java Architect</i> doesn't need to be considered the golden rule in this case. Actually, there are other opinions even within the Java core team as mentioned <a href='https://nipafx.dev/inside-java-newscast-19/'>here</a>.</p><p>I know that Java <code>Optional</code> has issues. It has memory overhead. It can make code look uglier. It is sometimes not very ergonomic to use. It is not very well integrated with older Java libraries.</p><p>However, it is still Java's best weapon against <code>NullPointerException</code>.</p>
+
+<p><i>Published: 2024-05-29</i></p>
+
+<p>
+  <i>
+  Tagged:
+  
+  <span class="tag">
+    <a href="tags/java.html">java</a>
+  </span>
+  
+  <span class="tag">
+    <a href="tags/programming.html">programming</a>
+  </span>
+  
+  </i>
+</p>
+
+
+
+      
+      <div style="margin-bottom: 20px; float: right;">
+        <a class="page-link" href="archive.html">Archive</a>
+      </div>
+      
+    </div>
+  </body>
+</html>

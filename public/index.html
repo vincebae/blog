@@ -70,6 +70,28 @@
 
       
     <div>
+        <h1><a href="0004-java-optional-controversy.html">Java Optional Controversy</a></h1>
+        <p>I have worked at a company and on a team where <code>Optional</code> is used extensively for a long time. So, I was very surprised when I found out that <code>Optional</code> is a <a href='https://nipafx.dev/inside-java-newscast-19/'>controversial topic</a>. There is even a camp that believes <a href='https://blogs.oracle.com/javamagazine/post/optional-class-null-pointer-drawbacks'><code>Optional</code> should be avoided</a>. Brian Goetz, the Java Architect, explicitly advocates the <a href='https://stackoverflow.com/questions/26327957/should-java-8-getters-return-optional-type/26328555#26328555'>"Use Optional as a Return Value in Limited Cases" camp</a> on Stack Overflow. This Stack Overflow post was written in 2014, and comments are still active even in 2024.</p><p>All this controversy confused me a lot. My current team follows Brian Goetz's opinion, and it is not very easy to persuade them to use <code>Optional</code> more broadly whenever needed.</p><p>Then, I found this comment in Brian Goetz's post, and my mind became clear:<blockquote><p> Java did not invent Optional. Neither does Java's Optional type do anything special than its usage in other languages.  </p></blockquote>Yes, <code>Optional</code> (or <code>Option</code> or <code>Maybe</code>) probably predates Java. Java users used custom <code>Optional</code> types (e.g., Guava) even before <code>java.util.Optional</code> was added. The opinion of the <i>Java Architect</i> doesn't need to be considered the golden rule in this case. Actually, there are other opinions even within the Java core team as mentioned <a href='https://nipafx.dev/inside-java-newscast-19/'>here</a>.</p><p>I know that Java <code>Optional</code> has issues. It has memory overhead. It can make code look uglier. It is sometimes not very ergonomic to use. It is not very well integrated with older Java libraries.</p><p>However, it is still Java's best weapon against <code>NullPointerException</code>.</p>
+        
+        
+        <p><i>Published: 2024-05-29</i></p>
+        
+            <p><i>
+                Tagged:
+                
+                    <span class="tag">
+                        <a href="tags/java.html">java</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="tags/programming.html">programming</a>
+                    </span>
+                
+            </i></p>
+        
+    </div>
+
+    <div>
         <h1><a href="0003-test-driven-development.html">Test Driven Development</a></h1>
         <p>I like <a href='https://tidyfirst.substack.com/p/canon-tdd'>TDD</a>. I don't think it is a must, but I try to use it whenever possible and recommend it to others to try. I believe that TDD is a very useful tool as long as I write automated tests, which I think are a must for any non-prototyping project.</p><p>Are there any benefits to writing tests first? Does it really matter? The point is in "driven". TDD is not "Test First Development".</p><ul><li>It makes me deeply consider testability from the beginning so that I don't need to change code later for testability.</li><li>It helps me approach problems from <strong>what</strong> I am supposed to solve (requirements), rather than <strong>how</strong> (implementation details).</li><li>Consequently, it lets me write testable code for clearer goals, which eventually increases productivity.</li></ul><p>Once I can do these perfectly without TDD, I might not need TDD anymore. Until then, I'll keep using it.</p><p>As a bonus, <a href='https://www.oreilly.com/library/view/modern-c-programming/9781941222423/f_0054.html'>transitioning from Red to Green</a> gives me immediate feedback, especially when combined with continuous testing. It is very satisfying and addictive.</p>
         
@@ -103,24 +125,6 @@
                 
                     <span class="tag">
                         <a href="tags/programming.html">programming</a>
-                    </span>
-                
-            </i></p>
-        
-    </div>
-
-    <div>
-        <h1><a href="0001-first-post.html">First blog post / changelog</a></h1>
-        <p>The first post of this blog.</p><p>Blog changelog: </p><ul><li>2024-05-27<ul><li>Created by forking <a href='https://github.com/borkdude/blog'>borkdude/blog</a>  based on <a href='https://medium.com/@jmglov/actually-blogging-with-clojure-fe485990eb98'>this instruction</a></li><li>Deployed on Heroku as a static PHP web server based on <a href='https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489'>this instruction</a></li><li>Linked to http://blog.biniko.me in google domain</li></ul></li><li>2024-05-28: Updated as a static clojure web server using <a href='https://github.com/babashka/http-server'>babashka/http-server</a></li></ul>
-        
-        
-        <p><i>Published: 2024-05-27</i></p>
-        
-            <p><i>
-                Tagged:
-                
-                    <span class="tag">
-                        <a href="tags/blog.html">blog</a>
                     </span>
                 
             </i></p>
