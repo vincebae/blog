@@ -7,7 +7,6 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.babashka/http-server "0.1.12"]
                  [org.clojure/tools.cli "1.1.230"]]
-
   :main ^:skip-aot web-server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

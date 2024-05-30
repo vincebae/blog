@@ -11,7 +11,7 @@
    ["-d" "--dir DIR" "Directory to serve"
     :default "public"]])
 
-(defn start-server
+(defn- start-server
   [port dir]
   (http/serve {:port port :dir dir :header {}}))
 

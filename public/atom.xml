@@ -3,11 +3,18 @@
   <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-05-29T06:49:14+00:00</updated>
+  <updated>2024-05-30T04:02:57+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>
   </author>
+  <entry>
+    <id>https://blog.biniko.me/0003-test-driven-development.html</id>
+    <link href="https://blog.biniko.me/0003-test-driven-development.html"/>
+    <title>Test Driven Development</title>
+    <updated>2024-05-29T23:59:59+00:00</updated>
+    <content type="html"><![CDATA[<p>I like <a href='https://tidyfirst.substack.com/p/canon-tdd'>TDD</a>.\ I don't think it is a must, but I try to use it whenever possible and recommend it to others to try.\ I believe that TDD is a very useful tool as long as I write automated tests, which I think are a must for any non-prototyping project.</p><p>Are there any benefits to writing tests first? Does it really matter?\ The point is in "driven". TDD is not "Test First Development".</p><ul><li>It makes me deeply consider testability from the beginning so that I don't need to change code later for testability.</li><li>It helps me approach problems from <strong>what</strong> I am supposed to solve (requirements), rather than <strong>how</strong> (implementation details).</li><li>Consequently, it lets me write testable code for clearer goals, which eventually increases productivity.</li></ul><p>Once I can do these perfectly without TDD, I might not need TDD anymore. Until then, I'll keep using it.</p><p>As a bonus, <a href='https://www.oreilly.com/library/view/modern-c-programming/9781941222423/f_0054.html'>transitioning from Red to Green</a> gives me immediate feedback, especially when combined with continuous testing. It is very satisfying and addictive.</p>]]></content>
+  </entry>
   <entry>
     <id>https://blog.biniko.me/0002-principles-on-programming.html</id>
     <link href="https://blog.biniko.me/0002-principles-on-programming.html"/>
