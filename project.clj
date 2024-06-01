@@ -5,8 +5,12 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :min-lein-version "2.9.1"
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [org.babashka/http-server "0.1.12"]
-                 [org.clojure/tools.cli "1.1.230"]]
+                 [org.clojure/tools.cli "1.1.230"]
+                 [ring/ring-core "1.8.2"]
+                 [ring/ring-jetty-adapter "1.8.2"]
+                 [compojure "1.7.1"]
+                 [selmer "1.12.61"]]
+                 
   :main ^:skip-aot web-server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
