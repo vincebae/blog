@@ -30,6 +30,7 @@ function sumTo(n) {
     i++;
   }
   return res;
+}
 ```
 
 ## While (true) loop version
