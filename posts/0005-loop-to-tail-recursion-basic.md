@@ -175,9 +175,9 @@ const sumTo = (n, res = 0) => (n <= 0) ? res : sumTo(n - 1, res + n);
 
 ## Clojure version Multi-arity Version
 ```
-;; Clojure doesn't support default parameters.
-;; Multi-arity function can be used instead of inner function.
-;; In clojure, recur needs to be used to perform tail recursion with tail-call optimization.
+;;; Clojure doesn't support default parameters.
+;;; Multi-arity function can be used instead of inner function.
+;;; In clojure, recur needs to be used to perform tail recursion with tail-call optimization.
 (defn sumTo
  ([n] (sumTo n 0))  ; call with res = 0
  ([n res]
@@ -188,9 +188,8 @@ const sumTo = (n, res = 0) => (n <= 0) ? res : sumTo(n - 1, res + n);
 
 ## Clojure version Loop Version
 ```
-;; Loop macro can be used to have tail recursion in the middle of the function.
-(defn sumTo
- [n]
+;;; Loop macro can be used to have tail recursion in the middle of the function.
+(defn sumTo [n]
  ;; initialize the loop with i to n and res to 0
  ;; this becomes the target for recur below
  ;; comma is unnecessary, but added for clarity

@@ -189,18 +189,17 @@ function sumTo&#40;n, res = 0&#41; {
   return sumTo&#40;n - 1, res + n&#41;;
 }
 </code></pre><h2 id="one_liner_with_tertiary_operation">One liner with tertiary operation</h2><pre><code>const sumTo = &#40;n, res = 0&#41; =&gt; &#40;n &lt;= 0&#41; ? res : sumTo&#40;n - 1, res + n&#41;;
-</code></pre><h2 id="clojure_version_multi-arity_version">Clojure version Multi-arity Version</h2><pre><code>;; Clojure doesn't support default parameters.
-;; Multi-arity function can be used instead of inner function.
-;; In clojure, recur needs to be used to perform tail recursion with tail-call optimization.
+</code></pre><h2 id="clojure_version_multi-arity_version">Clojure version Multi-arity Version</h2><pre><code>;;; Clojure doesn't support default parameters.
+;;; Multi-arity function can be used instead of inner function.
+;;; In clojure, recur needs to be used to perform tail recursion with tail-call optimization.
 &#40;defn sumTo
  &#40;&#91;n&#93; &#40;sumTo n 0&#41;&#41;  ; call with res = 0
  &#40;&#91;n res&#93;
    &#40;if &#40;&lt;= n 0&#41;  ; termination condition 
      res  ; return res when terminated
      &#40;recur &#40;dec n&#41; &#40;+ res n&#41;&#41;&#41;&#41;&#41;  ; recursive case
-</code></pre><h2 id="clojure_version_loop_version">Clojure version Loop Version</h2><pre><code>;; Loop macro can be used to have tail recursion in the middle of the function.
-&#40;defn sumTo
- &#91;n&#93;
+</code></pre><h2 id="clojure_version_loop_version">Clojure version Loop Version</h2><pre><code>;;; Loop macro can be used to have tail recursion in the middle of the function.
+&#40;defn sumTo &#91;n&#93;
  ;; initialize the loop with i to n and res to 0
  ;; this becomes the target for recur below
  ;; comma is unnecessary, but added for clarity
