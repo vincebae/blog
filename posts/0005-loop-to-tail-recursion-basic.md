@@ -68,7 +68,7 @@ function sumTo(n) {
 }
 ```
 
-## Make the index descending instead of ascending
+## Make the index decreasing instead of increasing 
 ```
 function sumTo(n) {
   let res = 0;

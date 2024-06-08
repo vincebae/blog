@@ -3,7 +3,7 @@
   <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-06-08T05:49:52+00:00</updated>
+  <updated>2024-06-08T05:51:40+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>
@@ -58,7 +58,7 @@ function sumTo&#40;n&#41; {
   }
   // This is unreachable, return statement here can be removed
 }
-</code></pre><h2 id="make_the_index_descending_instead_of_ascending">Make the index descending instead of ascending</h2><pre><code>function sumTo&#40;n&#41; {
+</code></pre><h2 id="make_the_index_decreasing_instead_of_increasing">Make the index decreasing instead of increasing</h2><pre><code>function sumTo&#40;n&#41; {
   let res = 0;
   let i = n;
   while &#40;true&#41; {
