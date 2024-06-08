@@ -3,7 +3,7 @@
   <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-06-08T05:51:40+00:00</updated>
+  <updated>2024-06-08T05:54:11+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>
@@ -108,7 +108,8 @@ function sumTo&#40;n&#41; {
     // Recursive call with values for next step.
     return loop&#40;res + i, i - 1&#41;;
   }
-  // Params are same as the initial values from the loop version.
+
+  // Delegate to inner function with the params same as the initial values of the loop version.
   return loop&#40;0, n&#41;;
 }
 </code></pre><h2 id="tail-recursion_version_with_flipped_parameter_order">Tail-Recursion Version with flipped parameter order</h2><pre><code>function sumTo&#40;n&#41; {

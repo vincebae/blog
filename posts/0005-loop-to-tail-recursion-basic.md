@@ -136,7 +136,8 @@ function sumTo(n) {
     // Recursive call with values for next step.
     return loop(res + i, i - 1);
   }
-  // Params are same as the initial values from the loop version.
+
+  // Delegate to inner function with the params same as the initial values of the loop version.
   return loop(0, n);
 }
 ```
