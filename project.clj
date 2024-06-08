@@ -8,12 +8,14 @@
                  [org.clojure/tools.cli "1.1.230"]
                  [ring/ring-core "1.8.2"]
                  [ring/ring-jetty-adapter "1.8.2"]
+                 [ring/ring-devel "1.8.0"]
                  [compojure "1.7.1"]
                  [selmer "1.12.61"]]
                  
   :main ^:skip-aot web-server.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all
+  :profiles {:dev {:main web-server.core/-dev-main}
+             :uberjar {:aot :all
                        :jar-name "web-server.jar"
                        :uberjar-name "web-server-standalone.jar"
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

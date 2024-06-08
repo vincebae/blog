@@ -3,11 +3,151 @@
   <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-06-01T04:27:25+00:00</updated>
+  <updated>2024-06-08T05:47:00+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>
   </author>
+  <entry>
+    <id>https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html</id>
+    <link href="https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html"/>
+    <title>Convert Loop to Tail Recursion Basic</title>
+    <updated>2024-06-07T23:59:59+00:00</updated>
+    <content type="html"><![CDATA[<p>Converting very basic loop to tail recursion using JavaScript and Clojure at the end.</p><h2 id="for-loop_version">For-loop version</h2><pre><code>// Sum integer from 1 to n &#40;inclusive&#41;.
+function sumTo&#40;n&#41; {
+  let res = 0;
+  for &#40;i = 1; i &lt;= n; i++&#41; {
+    res += i;
+  }
+  return res;
+}
+</code></pre><h2 id="while-loop_version">While-loop version</h2><pre><code>// For-loop is a syntactic sugar for while loop.
+// Any for-loop can be changed to while loop.
+function sumTo&#40;n&#41; {
+  let res = 0;
+  let i = 1;
+  while &#40;i &lt;= n&#41; {
+    res += i;
+    i++;
+  }
+  return res;
+</code></pre><h2 id="while_%28true%29_loop_version">While (true) loop version</h2><pre><code>// We can move the condition of while loop to inside the loop with break
+function sumTo&#40;n&#41; {
+  let res = 0;
+  let i = 1;
+  while &#40;true&#41; {
+    if &#40;i &lt;= n&#41; {
+      res += i;
+      i++;
+    } else {
+      break;
+    }
+  }
+  return res;
+}
+</code></pre><h2 id="make_it_return_early_in_while_loop">Make it return early in while loop</h2><pre><code>function sumTo&#40;n&#41; {
+  let res = 0;
+  let i = 1;
+  while &#40;true&#41; {
+    if &#40;i &gt; n&#41; {
+      return res
+    }    
+    res += i;
+    i++;
+  }
+  // This is unreachable, return statement here can be removed
+}
+</code></pre><h2 id="make_the_index_descending_instead_of_ascending">Make the index descending instead of ascending</h2><pre><code>function sumTo&#40;n&#41; {
+  let res = 0;
+  let i = n;
+  while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; {
+      return res;
+    }    
+    res += i;
+    i--;
+  }
+}
+</code></pre><h2 id="use_destructuring">Use destructuring</h2><pre><code>function sumTo&#40;n&#41; {
+  let &#91;res, i&#93; = &#91;0, n&#93;;
+  while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; {
+      return res;
+    }    
+    &#91;res, i&#93; = &#91;res + i, i - 1&#93;;
+  }
+}
+</code></pre><h2 id="use_labeled_statement_and_continue">Use labeled statement and continue</h2><pre><code>function sumTo&#40;n&#41; {
+  let &#91;res, i&#93; = &#91;0, n&#93;;
+  loop: while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; {
+      return res;
+    }    
+    &#91;res, i&#93; = &#91;res + i, i - 1&#93;;
+    continue loop; // Sure, this is unnecessary, but added for the next step
+  }
+}
+</code></pre><h2 id="use_labeled_statement_and_continue_%28commented%29">Use labeled statement and continue (Commented)</h2><pre><code>function sumTo&#40;n&#41; {
+  let &#91;res, i&#93; = &#91;0, n&#93;; // Initialization. These will be the initial value for the inner recursion function
+  loop: while &#40;true&#41; { // This will become the inner recursion function which take &#40;res, i&#41; as parameters
+    if &#40;i &lt;= 0&#41; { // termination condition of the recursion
+      return res;
+    }    
+    &#91;res, i&#93; = &#91;res + i, i - 1&#93;; // These are the new values of res and i when not terminated.
+                                 // These will be carried to the next step &#40;recursive call&#41;.
+    continue loop; // This will be recursive call with new params from the above line
+  }
+}
+</code></pre><h2 id="tail-recursion_version">Tail-Recursion Version</h2><pre><code>function sumTo&#40;n&#41; {
+  // Inner function for tail recursion.
+  const loop = &#40;res, i&#41; =&gt; {
+    if &#40;i &lt;= 0&#41; { // Same termination condition. No need to change
+      return res;
+    }
+    // Recursive call with values for next step.
+    return loop&#40;res + i, i - 1&#41;;
+  }
+  // Params are same as the initial values from the loop version.
+  return loop&#40;0, n&#41;;
+}
+</code></pre><h2 id="tail-recursion_version_with_flipped_parameter_order">Tail-Recursion Version with flipped parameter order</h2><pre><code>function sumTo&#40;n&#41; {
+  const loop = &#40;i, res&#41; =&gt; {
+    if &#40;i &lt;= 0&#41; {
+      return res;
+    }
+    return loop&#40;i - 1, res + i&#41;;
+  }
+  return loop&#40;n, 0&#41;;
+}
+</code></pre><h2 id="tail-recursion_version_with_default_parameter_%28no_inner_function%29">Tail-Recursion Version with default parameter (no inner function)</h2><pre><code>// Initial value of the previous version is set as the default value of res.
+// Since the inner function &#40;loop&#41; is removed, sumTo will be directly called.
+// We don't need variable i anymore. It is replaced by n.
+function sumTo&#40;n, res = 0&#41; {
+  if &#40;n &lt;= 0&#41; {
+    return res;
+  }
+  return sumTo&#40;n - 1, res + n&#41;;
+}
+</code></pre><h2 id="one_liner_with_tertiary_operation">One liner with tertiary operation</h2><pre><code>const sumTo = &#40;n, res = 0&#41; =&gt; &#40;n &lt;= 0&#41; ? res : sumTo&#40;n - 1, res + n&#41;;
+</code></pre><h2 id="clojure_version_multi-arity_version">Clojure version Multi-arity Version</h2><pre><code>;; Clojure doesn't support default parameters.
+;; Multi-arity function can be used instead of inner function.
+;; In clojure, recur needs to be used to perform tail recursion with tail-call optimization.
+&#40;defn sumTo
+ &#40;&#91;n&#93; &#40;sumTo n 0&#41;&#41;  ; call with res = 0
+ &#40;&#91;n res&#93;
+   &#40;if &#40;&lt;= n 0&#41;  ; termination condition 
+     res  ; return res when terminated
+     &#40;recur &#40;dec n&#41; &#40;+ res n&#41;&#41;&#41;&#41;&#41;  ; recursive case
+</code></pre><h2 id="clojure_version_loop_version">Clojure version Loop Version</h2><pre><code>;; Loop macro can be used to have tail recursion in the middle of the function.
+&#40;defn sumTo
+ &#91;n&#93;
+ ;; initialize the loop with i to n and res to 0
+ ;; this becomes the target for recur below
+ ;; comma is unnecessary, but added for clarity
+ &#40;loop &#91;i n, res 0&#93;
+   &#40;if &#40;&lt;= i 0&#41; res &#40;recur &#40;dec i&#41; &#40;+ res i&#41;&#41;&#41;&#41;&#41;
+</code></pre>]]></content>
+  </entry>
   <entry>
     <id>https://blog.biniko.me/0004-java-optional-controversy.html</id>
     <link href="https://blog.biniko.me/0004-java-optional-controversy.html"/>
@@ -34,6 +174,6 @@
     <link href="https://blog.biniko.me/0001-first-post.html"/>
     <title>First blog post / changelog</title>
     <updated>2024-05-27T23:59:59+00:00</updated>
-    <content type="html"><![CDATA[<p>The first post of this blog.</p><p>Blog changelog: </p><ul><li>2024-05-27<ul><li>Created by forking <a href='https://github.com/borkdude/blog'>borkdude/blog</a>  based on <a href='https://medium.com/@jmglov/actually-blogging-with-clojure-fe485990eb98'>this instruction</a></li><li>Deployed on Heroku as a static PHP web server based on <a href='https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489'>this instruction</a></li><li>Linked to http://blog.biniko.me in google domain</li></ul></li><li>2024-05-28: Updated as a static clojure web server using <a href='https://github.com/babashka/http-server'>babashka/http-server</a></li><li>2024-05-31: Updated to use <a href='https://github.com/ring-clojure/ring'>Ring</a> and <a href='https://github.com/weavejester/compojure'>Compojure</a> instead of babashka/http-server</li></ul>]]></content>
+    <content type="html"><![CDATA[<p>The first post of this blog.</p><p>Blog changelog: </p><ul><li>2024-05-27<ul><li>Created by forking <a href='https://github.com/borkdude/blog'>borkdude/blog</a>    based on <a href='https://medium.com/@jmglov/actually-blogging-with-clojure-fe485990eb98'>this instruction</a></li><li>Deployed on Heroku as a static PHP web server based on <a href='https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489'>this instruction</a></li><li>Linked to http://blog.biniko.me in google domain</li></ul></li><li>2024-05-28: Updated as a static clojure web server using <a href='https://github.com/babashka/http-server'>babashka/http-server</a></li><li>2024-05-31: Updated to use <a href='https://github.com/ring-clojure/ring'>Ring</a> and <a href='https://github.com/weavejester/compojure'>Compojure</a> instead of babashka/http-server</li></ul>]]></content>
   </entry>
 </feed>

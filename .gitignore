@@ -17,6 +17,7 @@ Gemfile.lock
 .cpcache
 .shadow-cljs
 .nrepl-port
+.lein-repl-history
 report.html
 classes
 target/
