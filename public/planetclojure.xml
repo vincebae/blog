@@ -3,11 +3,74 @@
   <title>Contemplating Software</title>
   <link href="https://blog.biniko.me/atom.xml" rel="self"/>
   <link href="https://blog.biniko.me"/>
-  <updated>2024-06-08T06:17:28+00:00</updated>
+  <updated>2024-06-18T05:00:45+00:00</updated>
   <id>https://blog.biniko.me</id>
   <author>
     <name>Seung-Bin Bae</name>
   </author>
+  <entry>
+    <id>https://blog.biniko.me/0006-loop-to-tail-recursion-fibonacci.html</id>
+    <link href="https://blog.biniko.me/0006-loop-to-tail-recursion-fibonacci.html"/>
+    <title>Fibonacci Tail Recursion</title>
+    <updated>2024-06-17T23:59:59+00:00</updated>
+    <content type="html"><![CDATA[<h1 id="loop_-%3E_tail_recursion_fibonacci">Loop -> Tail Recursion Fibonacci</h1><p>Fibonacci tail recursion in JavaScript and Clojure. Conversion from iteration to recursion is done in the same ways as the <a href='https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html'>basic conversion</a>. Some steps are skipped to make the conversion concise.</p><h3 id="non-tail_recursion_version">Non-tail recursion version</h3><pre><code>// Recursion, but not tail call. Simple and easy to understand, but very slow.
+// Note that negative numbers are not handled correctly to make it simpler throughout this post.
+function fib&#40;n&#41; {
+  if &#40;n &lt;= 1&#41; return n;
+  return fib&#40;n - 1&#41; + fib&#40;n - 2&#41;;
+}
+</code></pre><h3 id="iteration_version">Iteration version</h3><pre><code>function fib&#40;n&#41; {
+  let curr = 0;
+  let next = 1;
+  let i = 1;
+  while &#40;i &lt;= n&#41; {
+    let prev = curr;
+    curr = next;
+    next = prev + curr;
+    i++;
+  }
+  return curr;
+}
+</code></pre><h3 id="intermediate_step_before_tail_recursion">Intermediate step before tail recursion</h3><pre><code>// - move loop condition to inside of while
+// - return termination case early
+// - use destructuring to assign variables
+// - make index descreasing
+function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+  }
+}
+</code></pre><h3 id="unnecessary_step%3A_add_label_and_continue">Unnecessary step: add label and continue</h3><pre><code>function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  loop: while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+    continue loop;
+  }
+}
+</code></pre><h3 id="tail_recursion_with_inner_function">Tail recursion with inner function</h3><pre><code>function fib&#40;n&#41; {
+  const loop = &#40;i, curr, next&#41; =&gt; {
+    if &#40;i &lt;= 0&#41; return curr;
+    return loop&#40;i - 1, next, curr + next&#41;;
+  }
+  return loop&#40;n, 0, 1&#41;;
+}
+</code></pre><h3 id="tail_recursion_with_default_parameters">Tail recursion with default parameters</h3><pre><code>function fib&#40;n, curr = 0, next = 1&#41; {
+  if &#40;n &lt;= 0&#41; return curr;
+  return fib&#40;n - 1, next, curr + next&#41;;
+}
+</code></pre><h3 id="one_liner">One liner</h3><pre><code>const fib = &#40;n, curr = 0, next = 1&#41; =&gt; n &lt;= 0 ? curr : fib&#40;n - 1, next, curr + next&#41;;
+</code></pre><h3 id="clojure_multi-arity">Clojure Multi-arity</h3><pre><code>;;; Note that the condition is flipped from the JS version above.
+&#40;defn fib
+  &#40;&#91;n&#93; &#40;fib n 0 1&#41;&#41;
+  &#40;&#91;n curr next&#93; &#40;if &#40;pos? n&#41; &#40;recur &#40;dec n&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre><h3 id="clojure_loop">Clojure Loop</h3><pre><code>&#40;defn fib &#91;n&#93;
+  &#40;loop &#91;i n, curr 0, next 1&#93;
+    &#40;if &#40;pos? i&#41; &#40;recur &#40;dec i&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre>]]></content>
+  </entry>
   <entry>
     <id>https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html</id>
     <link href="https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html"/>

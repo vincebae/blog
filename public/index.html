@@ -70,6 +70,92 @@
 
       
     <div>
+        <h1><a href="0006-loop-to-tail-recursion-fibonacci.html">Fibonacci Tail Recursion</a></h1>
+        <h1 id="loop_-%3E_tail_recursion_fibonacci">Loop -> Tail Recursion Fibonacci</h1><p>Fibonacci tail recursion in JavaScript and Clojure. Conversion from iteration to recursion is done in the same ways as the <a href='https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html'>basic conversion</a>. Some steps are skipped to make the conversion concise.</p><h3 id="non-tail_recursion_version">Non-tail recursion version</h3><pre><code>// Recursion, but not tail call. Simple and easy to understand, but very slow.
+// Note that negative numbers are not handled correctly to make it simpler throughout this post.
+function fib&#40;n&#41; {
+  if &#40;n &lt;= 1&#41; return n;
+  return fib&#40;n - 1&#41; + fib&#40;n - 2&#41;;
+}
+</code></pre><h3 id="iteration_version">Iteration version</h3><pre><code>function fib&#40;n&#41; {
+  let curr = 0;
+  let next = 1;
+  let i = 1;
+  while &#40;i &lt;= n&#41; {
+    let prev = curr;
+    curr = next;
+    next = prev + curr;
+    i++;
+  }
+  return curr;
+}
+</code></pre><h3 id="intermediate_step_before_tail_recursion">Intermediate step before tail recursion</h3><pre><code>// - move loop condition to inside of while
+// - return termination case early
+// - use destructuring to assign variables
+// - make index descreasing
+function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+  }
+}
+</code></pre><h3 id="unnecessary_step%3A_add_label_and_continue">Unnecessary step: add label and continue</h3><pre><code>function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  loop: while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+    continue loop;
+  }
+}
+</code></pre><h3 id="tail_recursion_with_inner_function">Tail recursion with inner function</h3><pre><code>function fib&#40;n&#41; {
+  const loop = &#40;i, curr, next&#41; =&gt; {
+    if &#40;i &lt;= 0&#41; return curr;
+    return loop&#40;i - 1, next, curr + next&#41;;
+  }
+  return loop&#40;n, 0, 1&#41;;
+}
+</code></pre><h3 id="tail_recursion_with_default_parameters">Tail recursion with default parameters</h3><pre><code>function fib&#40;n, curr = 0, next = 1&#41; {
+  if &#40;n &lt;= 0&#41; return curr;
+  return fib&#40;n - 1, next, curr + next&#41;;
+}
+</code></pre><h3 id="one_liner">One liner</h3><pre><code>const fib = &#40;n, curr = 0, next = 1&#41; =&gt; n &lt;= 0 ? curr : fib&#40;n - 1, next, curr + next&#41;;
+</code></pre><h3 id="clojure_multi-arity">Clojure Multi-arity</h3><pre><code>;;; Note that the condition is flipped from the JS version above.
+&#40;defn fib
+  &#40;&#91;n&#93; &#40;fib n 0 1&#41;&#41;
+  &#40;&#91;n curr next&#93; &#40;if &#40;pos? n&#41; &#40;recur &#40;dec n&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre><h3 id="clojure_loop">Clojure Loop</h3><pre><code>&#40;defn fib &#91;n&#93;
+  &#40;loop &#91;i n, curr 0, next 1&#93;
+    &#40;if &#40;pos? i&#41; &#40;recur &#40;dec i&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre>
+        
+        
+        <p><i>Published: 2024-06-17</i></p>
+        
+            <p><i>
+                Tagged:
+                
+                    <span class="tag">
+                        <a href="tags/clojure.html">clojure</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="tags/fp.html">fp</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="tags/programming.html">programming</a>
+                    </span>
+                
+                    <span class="tag">
+                        <a href="tags/javascript.html">javascript</a>
+                    </span>
+                
+            </i></p>
+        
+    </div>
+
+    <div>
         <h1><a href="0005-loop-to-tail-recursion-basic.html">Convert Loop to Tail Recursion Basic</a></h1>
         <p>Converting very basic loop to tail recursion using JavaScript and Clojure at the end.</p><h2 id="for-loop_version">For-loop version</h2><pre><code>// Sum integer from 1 to n &#40;inclusive&#41;.
 function sumTo&#40;n&#41; {
@@ -249,28 +335,6 @@ function sumTo&#40;n, res = 0&#41; {
                 
                     <span class="tag">
                         <a href="tags/programming.html">programming</a>
-                    </span>
-                
-            </i></p>
-        
-    </div>
-
-    <div>
-        <h1><a href="0003-test-driven-development.html">Test Driven Development</a></h1>
-        <p>I like <a href='https://tidyfirst.substack.com/p/canon-tdd'>TDD</a>. I don't think it is a must, but I try to use it whenever possible and recommend it to others to try. I believe that TDD is a very useful tool as long as I write automated tests, which I think are a must for any non-prototyping project.</p><p>Are there any benefits to writing tests first? Does it really matter? The point is in "driven". TDD is not "Test First Development".</p><ul><li>It makes me deeply consider testability from the beginning so that I don't need to change code later for testability.</li><li>It helps me approach problems from <strong>what</strong> I am supposed to solve (requirements), rather than <strong>how</strong> (implementation details).</li><li>Consequently, it lets me write testable code for clearer goals, which eventually increases productivity.</li></ul><p>Once I can do these perfectly without TDD, I might not need TDD anymore. Until then, I'll keep using it.</p><p>As a bonus, <a href='https://www.oreilly.com/library/view/modern-c-programming/9781941222423/f_0054.html'>transitioning from Red to Green</a> gives me immediate feedback, especially when combined with continuous testing. It is very satisfying and addictive.</p>
-        
-        
-        <p><i>Published: 2024-05-29</i></p>
-        
-            <p><i>
-                Tagged:
-                
-                    <span class="tag">
-                        <a href="tags/programming.html">programming</a>
-                    </span>
-                
-                    <span class="tag">
-                        <a href="tags/test.html">test</a>
                     </span>
                 
             </i></p>

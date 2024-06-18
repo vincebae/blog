@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fibonacci Tail Recursion</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="application/atom+xml" rel="alternate" href="atom.xml" title="Fibonacci Tail Recursion">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-clojure.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css">
+
+    <!-- See Features > favicon in README.md -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!-- Social sharing (Facebook, Twitter, LinkedIn, etc.) -->
+    <meta name="title" content="Fibonacci Tail Recursion">
+    <meta name="twitter:title" content="Fibonacci Tail Recursion">
+    <meta property="og:title" content="Fibonacci Tail Recursion">
+    <meta property="og:type" content="website">
+
+
+    <meta name="twitter:url" content="https://blog.biniko.me/0006-loop-to-tail-recursion-fibonacci.html">
+    <meta property="og:url" content="https://blog.biniko.me/0006-loop-to-tail-recursion-fibonacci.html">
+
+
+    <meta name="twitter:card" content="summary">
+
+
+
+  </head>
+  <body>
+
+    <div class="site-header">
+      <div class="wrapper">
+        <div class="site-nav">
+          <a class="page-link" href="archive.html">Archive</a>
+          <a class="page-link" href="tags/index.html">Tags</a>
+          <a class="page-link" href="https://github.com/vincebae/blog/discussions/categories/posts">Discuss</a>
+	  <a class="page-link" href="atom.xml">
+            Feed
+          </a>
+	  
+	  
+	  <a class="page-link" href="https://www.linkedin.com/in/seung-bin-bae/">About</a>
+	  
+        </div>
+        <div>
+          <h1 class="site-title">
+            <a class="page-link" href="index.html">Contemplating Software</a>
+          </h1>
+	  <p>Rambles on software development, architecture and programming</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+
+      <h1>
+  
+  Fibonacci Tail Recursion
+  
+</h1>
+<h1 id="loop_-%3E_tail_recursion_fibonacci">Loop -> Tail Recursion Fibonacci</h1><p>Fibonacci tail recursion in JavaScript and Clojure. Conversion from iteration to recursion is done in the same ways as the <a href='https://blog.biniko.me/0005-loop-to-tail-recursion-basic.html'>basic conversion</a>. Some steps are skipped to make the conversion concise.</p><h3 id="non-tail_recursion_version">Non-tail recursion version</h3><pre><code>// Recursion, but not tail call. Simple and easy to understand, but very slow.
+// Note that negative numbers are not handled correctly to make it simpler throughout this post.
+function fib&#40;n&#41; {
+  if &#40;n &lt;= 1&#41; return n;
+  return fib&#40;n - 1&#41; + fib&#40;n - 2&#41;;
+}
+</code></pre><h3 id="iteration_version">Iteration version</h3><pre><code>function fib&#40;n&#41; {
+  let curr = 0;
+  let next = 1;
+  let i = 1;
+  while &#40;i &lt;= n&#41; {
+    let prev = curr;
+    curr = next;
+    next = prev + curr;
+    i++;
+  }
+  return curr;
+}
+</code></pre><h3 id="intermediate_step_before_tail_recursion">Intermediate step before tail recursion</h3><pre><code>// - move loop condition to inside of while
+// - return termination case early
+// - use destructuring to assign variables
+// - make index descreasing
+function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+  }
+}
+</code></pre><h3 id="unnecessary_step%3A_add_label_and_continue">Unnecessary step: add label and continue</h3><pre><code>function fib&#40;n&#41; {
+  let &#91;i, curr, next&#93; = &#91;n, 0, 1&#93;;
+  loop: while &#40;true&#41; {
+    if &#40;i &lt;= 0&#41; return curr;
+    &#91;i, curr, next&#93; = &#91;i - 1, next, curr + next&#93;;
+    continue loop;
+  }
+}
+</code></pre><h3 id="tail_recursion_with_inner_function">Tail recursion with inner function</h3><pre><code>function fib&#40;n&#41; {
+  const loop = &#40;i, curr, next&#41; =&gt; {
+    if &#40;i &lt;= 0&#41; return curr;
+    return loop&#40;i - 1, next, curr + next&#41;;
+  }
+  return loop&#40;n, 0, 1&#41;;
+}
+</code></pre><h3 id="tail_recursion_with_default_parameters">Tail recursion with default parameters</h3><pre><code>function fib&#40;n, curr = 0, next = 1&#41; {
+  if &#40;n &lt;= 0&#41; return curr;
+  return fib&#40;n - 1, next, curr + next&#41;;
+}
+</code></pre><h3 id="one_liner">One liner</h3><pre><code>const fib = &#40;n, curr = 0, next = 1&#41; =&gt; n &lt;= 0 ? curr : fib&#40;n - 1, next, curr + next&#41;;
+</code></pre><h3 id="clojure_multi-arity">Clojure Multi-arity</h3><pre><code>;;; Note that the condition is flipped from the JS version above.
+&#40;defn fib
+  &#40;&#91;n&#93; &#40;fib n 0 1&#41;&#41;
+  &#40;&#91;n curr next&#93; &#40;if &#40;pos? n&#41; &#40;recur &#40;dec n&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre><h3 id="clojure_loop">Clojure Loop</h3><pre><code>&#40;defn fib &#91;n&#93;
+  &#40;loop &#91;i n, curr 0, next 1&#93;
+    &#40;if &#40;pos? i&#41; &#40;recur &#40;dec i&#41; next &#40;+ curr next&#41;&#41; curr&#41;&#41;&#41;
+</code></pre>
+
+<p><i>Published: 2024-06-17</i></p>
+
+<p>
+  <i>
+  Tagged:
+  
+  <span class="tag">
+    <a href="tags/clojure.html">clojure</a>
+  </span>
+  
+  <span class="tag">
+    <a href="tags/fp.html">fp</a>
+  </span>
+  
+  <span class="tag">
+    <a href="tags/programming.html">programming</a>
+  </span>
+  
+  <span class="tag">
+    <a href="tags/javascript.html">javascript</a>
+  </span>
+  
+  </i>
+</p>
+
+
+
+      
+      <div style="margin-bottom: 20px; float: right;">
+        <a class="page-link" href="archive.html">Archive</a>
+      </div>
+      
+    </div>
+  </body>
+</html>
